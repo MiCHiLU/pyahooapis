@@ -26,7 +26,9 @@ class Service(object):
             os.environ['PYAHOOAPIS_ENCODING'] = encoding or 'utf8'
 
     def _encode_to_utf8(self, text):
-        return unicode(text, os.environ.get('PYAHOOAPIS_ENCODING', 'utf8')).encode('utf8')
+        if not isinstance(text, unicode):
+            text = unicode(text, os.environ.get('PYAHOOAPIS_ENCODING', 'utf8'))
+        return text.encode('utf8')
         
     def _get_text(self, node, tagName):
         try:
